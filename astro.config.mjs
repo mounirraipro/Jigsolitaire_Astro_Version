@@ -3,7 +3,18 @@ import partytown from "@astrojs/partytown";
 import tailwindcss from "@tailwindcss/vite";
 import { siteConfig } from "./src/data/siteConfig";
 
-const site = process.env.SITE_URL ?? siteConfig.siteUrl;
+const resolveSite = () => {
+  const configuredSite = process.env.SITE_URL?.trim() || siteConfig.siteUrl;
+  const url = new URL(configuredSite);
+
+  if (url.hostname !== "jigsolitaire.online" && url.hostname.endsWith(".jigsolitaire.online")) {
+    url.hostname = "jigsolitaire.online";
+  }
+
+  return url.origin;
+};
+
+const site = resolveSite();
 
 export default defineConfig({
   site,

@@ -44,10 +44,15 @@ const bentoGamesLeft = bentoGames.slice(0, 4);
 const bentoGamesRight = bentoGames.slice(4, 8);
 const gameSeoTitle = `Play ${game.title} Online - Free Browser Game`;
 const encodedIframeUrl = Buffer.from(game.iframeUrl, "utf8").toString("base64");
+const guideItems = [
+  { id: `${game.slug}-about`, label: "About", title: `About ${game.title}`, body: game.seoOverview },
+  { id: `${game.slug}-play`, label: "Rules", title: "How to play", body: game.howToPlay },
+  { id: `${game.slug}-strategy`, label: "Strategy", title: "Strategy", body: game.strategyGuide },
+];
 ---
 
 <BaseLayout title={game.title} description={game.description} seo={{ path: `/games/${game.slug}`, seoTitle: gameSeoTitle }}>
-  <section class="embedded-game-page">
+  <section class:list={["embedded-game-page", game.accentClass]}>
     <header class="embedded-game-head">
       <nav class="crumbs"><a href="/games/">Games</a><span>/</span><span>{game.category}</span></nav>
       <h1>{game.title}</h1>
@@ -92,29 +97,45 @@ const encodedIframeUrl = Buffer.from(game.iframeUrl, "utf8").toString("base64");
       </div>
     </div>
 
-    <section class="seo-copy-section embedded-seo-content" aria-labelledby={`${game.slug}-guide`}>
-      <div class="section-head">
-        <h2 id={`${game.slug}-guide`}>{game.title} guide.</h2>
-      </div>
-      <div class="seo-copy-grid">
-        <article class="seo-copy-card seo-copy-wide">
-          <h3>About {game.title}</h3>
-          <p>{game.seoOverview}</p>
-        </article>
-        <article class="seo-copy-card">
-          <h3>How to play</h3>
-          <p>{game.howToPlay}</p>
-        </article>
-        <article class="seo-copy-card">
-          <h3>Strategy</h3>
-          <p>{game.strategyGuide}</p>
-        </article>
-        <article class="seo-copy-card">
-          <h3>Player tips</h3>
-          <ul>
-            {game.playerTips.map((tip) => <li>{tip}</li>)}
-          </ul>
-        </article>
+    <section class="game-guide-section" aria-labelledby={`${game.slug}-guide`}>
+      <aside class="game-guide-aside" aria-label={`${game.title} guide navigation`}>
+        <p>{game.category} guide</p>
+        {guideItems.map((item, index) => (
+          <a href={`#${item.id}`}>
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            {item.label}
+          </a>
+        ))}
+        <a href={`#${game.slug}-tips`}><span>04</span>Tips</a>
+      </aside>
+
+      <div class="game-guide-main">
+        <header class="game-guide-head">
+          <h2 id={`${game.slug}-guide`}>{game.title} guide</h2>
+          <p>Clear rules, practical strategy, and quick tips before you load the iframe.</p>
+        </header>
+
+        <div class="game-guide-flow">
+          {guideItems.map((item, index) => (
+            <article class="game-guide-block" id={item.id}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </div>
+            </article>
+          ))}
+
+          <article class="game-guide-tips" id={`${game.slug}-tips`}>
+            <div>
+              <span>04</span>
+              <h3>Player tips</h3>
+            </div>
+            <ul>
+              {game.playerTips.map((tip) => <li>{tip}</li>)}
+            </ul>
+          </article>
+        </div>
       </div>
     </section>
   </section>

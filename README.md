@@ -20,7 +20,7 @@ npm run dev
 Set production values in `.env`. `SITE_URL` must be the final public origin so Astro can generate correct sitemap URLs:
 
 ```bash
-SITE_URL=https://example.com
+SITE_URL=https://jigsolitaire.online
 PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
 PUBLIC_GTM_ID=GTM-XXXXXXX
 ```

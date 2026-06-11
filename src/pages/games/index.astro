@@ -2,52 +2,111 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { externalGames } from "@/data/externalGames";
 import { brandAccentClass } from "@/data/accentClasses";
+
+const featuredGames = [
+  {
+    href: "/play/",
+    title: "JigSolitaire Online",
+    shortTitle: "JigSolitaire",
+    category: "Main game",
+    description: "Swap image tiles, merge correct groups, and restore the full puzzle.",
+    thumbnail: "/level-thumbs/Animals/JigSolitaire_Animals1.webp",
+    accentClass: brandAccentClass,
+  },
+  ...externalGames.slice(0, 3).map((game) => ({
+    href: `/games/${game.slug}/`,
+    title: game.title,
+    shortTitle: game.shortTitle,
+    category: game.category,
+    description: game.description,
+    thumbnail: game.thumbnail,
+    accentClass: game.accentClass,
+  })),
+];
+
+const directoryGames = [
+  {
+    href: "/play/",
+    title: "JigSolitaire Online",
+    shortTitle: "JigSolitaire",
+    category: "Visual puzzle",
+    description: "The main JigSolitaire experience with image tiles, merged groups, and calm visual solving.",
+    thumbnail: "/level-thumbs/Animals/JigSolitaire_Animals1.webp",
+    accentClass: brandAccentClass,
+  },
+  ...externalGames.map((game) => ({
+    href: `/games/${game.slug}/`,
+    title: game.title,
+    shortTitle: game.shortTitle,
+    category: game.category,
+    description: game.description,
+    thumbnail: game.thumbnail,
+    accentClass: game.accentClass,
+  })),
+];
 ---
 
 <BaseLayout title="Free Online Games" description="Play JigSolitaire and more free online browser games, including card games, tile puzzles, word games, logic games, and arcade puzzle favorites.">
-  <section class="listing-shell games-hub">
-    <header class="listing-header">
-      <p class="eyebrow">Game Library</p>
-      <h1>Play more browser games.</h1>
-      <p>Pick a game, open it in the same clean iframe layout, and keep playing without downloads or accounts.</p>
+  <section class="games-directory">
+    <header class="games-directory-hero">
+      <div>
+        <h1>Free browser games.</h1>
+        <p>Play JigSolitaire and a focused library of puzzle, card, word, tile, and logic games. No downloads, no account setup, just clean browser play.</p>
+      </div>
+      <a class="games-directory-action" href="/play/"><span></span>Play JigSolitaire</a>
     </header>
-    <div class="site-game-grid">
-      <a class:list={["site-game-card", "site-game-card-featured", brandAccentClass]} href="/play/">
-        <img src="/level-thumbs/Animals/JigSolitaire_Animals1.webp" alt="JigSolitaire puzzle thumbnail" width="640" height="360" loading="lazy" />
-        <div>
-          <span>JigSolitaire</span>
-          <h2>JigSolitaire Online</h2>
-          <p>Swap image tiles, merge correct groups, and restore the full puzzle.</p>
-          <small>Featured puzzle game</small>
-        </div>
-      </a>
-      {externalGames.map((game) => (
-        <a class:list={["site-game-card", game.accentClass]} href={`/games/${game.slug}/`}>
+
+    <div class="games-feature-rail" aria-label="Featured games">
+      {featuredGames.map((game, index) => (
+        <a class:list={["games-feature-link", game.accentClass]} href={game.href}>
           <img src={game.thumbnail} alt={`${game.title} thumbnail`} width="640" height="360" loading="lazy" />
           <div>
             <span>{game.category}</span>
-            <h3>{game.title}</h3>
-            <p>{game.description}</p>
-            <small>Play now</small>
+            <strong>{game.shortTitle}</strong>
           </div>
+          <small>{index === 0 ? "Start here" : "Related pick"}</small>
         </a>
       ))}
     </div>
 
-    <section class="seo-copy-section" aria-labelledby="games-library-guide">
-      <div class="section-head">
-        <h3 id="games-library-guide">Game library guide.</h3>
+    <section class="games-directory-main" aria-labelledby="games-directory-title">
+      <div class="games-directory-intro">
+        <h2 id="games-directory-title">Choose a game</h2>
+        <p>{directoryGames.length} browser games selected for visual puzzle players, quick breaks, and low-friction play.</p>
       </div>
-      <div class="seo-copy-grid">
-        <article class="seo-copy-card seo-copy-wide">
+
+      <div class="games-directory-list">
+        {directoryGames.map((game, index) => (
+          <a class:list={["games-directory-row", game.accentClass]} href={game.href}>
+            <span class="games-directory-number">{String(index + 1).padStart(2, "0")}</span>
+            <img src={game.thumbnail} alt={`${game.title} thumbnail`} width="320" height="180" loading="lazy" />
+            <div>
+              <span>{game.category}</span>
+              <h3>{game.title}</h3>
+              <p>{game.description}</p>
+            </div>
+            <span class="games-directory-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                <path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="games-guide-strip" aria-labelledby="games-library-guide">
+      <h2 id="games-library-guide">Game library guide</h2>
+      <div>
+        <article>
           <h3>Free browser games in one place</h3>
           <p>The games library brings together JigSolitaire and a focused set of free online games that work directly in the browser. The goal is to keep every game easy to open, easy to understand, and useful for quick sessions without downloads or account setup. Players can switch from visual tile puzzles to card games, word games, number logic, arcade aiming, or board-clearing puzzles while staying inside the same clean site structure.</p>
         </article>
-        <article class="seo-copy-card">
+        <article>
           <h3>How to choose a game</h3>
           <p>Choose JigSolitaire when you want image-based puzzle solving, Solitaire Classic or 4 Color Card Game for card play, Mahjong Connect for tile matching, Word Search for vocabulary focus, Bubble Shooter for quick arcade decisions, Block Puzzle for spatial planning, and Sudoku for pure logic. Each page includes the playable iframe plus supporting tips so visitors understand the rules before they begin.</p>
         </article>
-        <article class="seo-copy-card">
+        <article>
           <h3>Why no-download play matters</h3>
           <p>Browser games are useful because they remove friction. You can open a page, play immediately, and leave without installing software. That matters for players on shared computers, mobile devices, school laptops, or work breaks. These pages are built as static Astro routes, which also helps crawlers discover each game page and understand the topic clearly.</p>
         </article>

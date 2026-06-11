@@ -13,6 +13,7 @@ type SitemapEntry = {
 };
 
 const staticContentPages: SitemapEntry[] = [
+  { path: "/game", changeFrequency: "weekly", priority: 0.74 },
   { path: "/games/beginner-puzzles", changeFrequency: "monthly", priority: 0.68 },
   { path: "/games/expert-puzzles", changeFrequency: "monthly", priority: 0.68 },
   { path: "/levels", changeFrequency: "weekly", priority: 0.72 },

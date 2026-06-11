@@ -30,7 +30,7 @@ const articleHeadingOverrides: Record<string, string> = {
   "tile-swap-puzzle-games-guide": "Tile-Swap Puzzle Games Guide",
 };
 const articleHeading = articleHeadingOverrides[article.slug] ?? article.title;
-const articleBodyHtml = article.html.replace(/<h2\b/gi, "<h3").replace(/<\/h2>/gi, "</h3>");
+const articleBodyHtml = article.html;
 const articleStructuredData = [
   {
     "@context": "https://schema.org",
@@ -64,14 +64,16 @@ const articleStructuredData = [
   <article class="blog-article">
     <header class="blog-article-header">
       <nav class="crumbs"><a href="/blog/">Blog</a><span>/</span><span>{article.category}</span></nav>
+      <div class="blog-article-kicker">
+        <span>{article.category}</span>
+        <time datetime={article.datePublished}>{published}</time>
+        <span>{article.readTime}</span>
+      </div>
       <h1>{articleHeading}</h1>
       <p>{article.description}</p>
       <div class="author-byline">
-        <span class="author-avatar">LA</span>
-        <div>
-          <strong>Lahcen Aharouane</strong>
-          <span>{published} <span aria-hidden="true">&middot;</span> Updated {modified} <span aria-hidden="true">&middot;</span> {article.readTime}</span>
-        </div>
+        <strong>By Lahcen Aharouane</strong>
+        <span>Updated {modified}</span>
       </div>
     </header>
 
@@ -119,7 +121,7 @@ const articleStructuredData = [
 
         {related.length > 0 && (
           <nav class="related-articles" aria-label="Continue reading">
-            <h3>More after {articleHeading}</h3>
+            <h3>Read next</h3>
             <div>
               {related.map((item) => (
                 <a href={`/blog/${item.slug}/`}>
@@ -135,17 +137,13 @@ const articleStructuredData = [
 
       <aside class="blog-article-aside" aria-label="Article tools">
         <div class="article-side-card">
-          <p>Article details</p>
+          <p>Details</p>
           <dl>
             <div><dt>Category</dt><dd>{article.category}</dd></div>
             <div><dt>Read time</dt><dd>{article.readTime}</dd></div>
             <div><dt>Updated</dt><dd>{modified}</dd></div>
           </dl>
-        </div>
-        <div class="article-side-card">
-          <p>Play after reading</p>
-          <h3>Try the ideas in a puzzle.</h3>
-          <a class="primary-action" href="/play/"><span class="play-triangle"></span>Play JigSolitaire</a>
+          <a class="article-side-link" href="/play/">Play JigSolitaire</a>
         </div>
       </aside>
     </div>

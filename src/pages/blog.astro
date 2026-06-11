@@ -1,24 +1,67 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { articles } from "@/data/articles";
+
+const dateFormatter = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" });
+const [featuredPost, ...restPosts] = articles;
+const categories = Array.from(
+  articles.reduce((map, article) => {
+    map.set(article.category, (map.get(article.category) ?? 0) + 1);
+    return map;
+  }, new Map<string, number>()),
+).sort(([a], [b]) => a.localeCompare(b));
 ---
 
 <BaseLayout title="JigSolitaire Blog" description="Read JigSolitaire guides, puzzle strategy articles, game reviews, focus tips, and practical advice for jigsaw solitaire and browser puzzle fans.">
-  <section class="listing-shell">
-    <header class="listing-header">
-      <p class="eyebrow">JigSolitaire Blog</p>
-      <h1>Puzzle guides, science, reviews, and strategy.</h1>
-      <p>Explore the imported JigSolitaire article library, now rendered as Astro pages.</p>
+  <main class="blog-card-page">
+    <header class="blog-card-hero" aria-labelledby="blog-directory-title">
+      <div class="blog-card-hero-copy">
+        <p>{articles.length} articles across {categories.length} topics</p>
+        <h1 id="blog-directory-title">JigSolitaire Blog</h1>
+        <span>Guides, strategy, reviews, and practical notes for better puzzle play.</span>
+      </div>
+      <nav class="blog-card-topics" aria-label="Blog topics">
+        {categories.slice(0, 8).map(([category, count]) => (
+          <span>
+            <strong>{category}</strong>
+            <small>{count}</small>
+          </span>
+        ))}
+      </nav>
     </header>
-    <div class="article-grid">
-      {articles.map((post, index) => (
-        <a class="article-card" href={`/blog/${post.slug}/`}>
-          <span>{post.category}</span>
-          {index === 0 ? <h2>{post.title}</h2> : <h3>{post.title}</h3>}
-          <p>{post.description}</p>
-          <small>{new Date(post.datePublished).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })} - {post.readTime}</small>
-        </a>
-      ))}
-    </div>
-  </section>
+
+    {featuredPost && (
+      <a class="blog-feature-card" href={`/blog/${featuredPost.slug}/`}>
+        <div>
+          <p>Latest / {featuredPost.category}</p>
+          <h2>{featuredPost.title}</h2>
+          <span>{featuredPost.description}</span>
+        </div>
+        <footer>
+          <time datetime={featuredPost.datePublished}>{dateFormatter.format(new Date(featuredPost.datePublished))}</time>
+          <small>{featuredPost.readTime}</small>
+        </footer>
+      </a>
+    )}
+
+    <section class="blog-card-section" id="article-list" aria-labelledby="blog-list-title">
+      <header>
+        <h2 id="blog-list-title">All articles</h2>
+        <span>{restPosts.length} more guides</span>
+      </header>
+      <div class="blog-card-grid">
+        {restPosts.map((post) => (
+          <a class="blog-post-card" href={`/blog/${post.slug}/`}>
+            <div class="blog-post-card-top">
+              <span>{post.category}</span>
+              <time datetime={post.datePublished}>{dateFormatter.format(new Date(post.datePublished))}</time>
+            </div>
+            <h3>{post.title}</h3>
+            <p>{post.description}</p>
+            <small>{post.readTime}</small>
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
 </BaseLayout>
