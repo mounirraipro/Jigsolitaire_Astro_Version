@@ -8,12 +8,17 @@ type Props = {
 
 const {
   gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID,
-  gtmId = import.meta.env.PUBLIC_GTM_ID,
+  gtmId = import.meta.env.PUBLIC_GTM_ID || "GTM-M43CQFXB",
   placement = "head",
   usePartytown = true,
 } = Astro.props;
 
-const scriptType = usePartytown ? "text/partytown" : "text/javascript";
+const gaScriptType = usePartytown ? "text/partytown" : "text/javascript";
+const gtmHeadSnippet = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${gtmId}');`;
 ---
 
 {
@@ -21,12 +26,12 @@ const scriptType = usePartytown ? "text/partytown" : "text/javascript";
     <>
       <script
         is:inline
-        type={scriptType}
+        type={gaScriptType}
         async
         src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
       ></script>
       <script
-        type={scriptType}
+        type={gaScriptType}
         define:vars={{ gaMeasurementId }}
         is:inline
       >
@@ -41,19 +46,7 @@ const scriptType = usePartytown ? "text/partytown" : "text/javascript";
 
 {
   placement === "head" && gtmId && (
-    <script type={scriptType} define:vars={{ gtmId }} is:inline>
-      window.dataLayer = window.dataLayer || [];
-      (function(w,d,s,l,i){
-        w[l]=w[l]||[];
-        w[l].push({"gtm.start": new Date().getTime(), event:"gtm.js"});
-        var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),
-          dl=l!="dataLayer"?"&l="+l:"";
-        j.async=true;
-        j.src="https://www.googletagmanager.com/gtm.js?id="+i+dl;
-        f.parentNode.insertBefore(j,f);
-      })(window,document,"script","dataLayer",gtmId);
-    </script>
+    <script is:inline set:html={gtmHeadSnippet}></script>
   )
 }
 
@@ -65,6 +58,7 @@ const scriptType = usePartytown ? "text/partytown" : "text/javascript";
         src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
         height="0"
         width="0"
+        style="display:none;visibility:hidden"
       ></iframe>
     </noscript>
   )

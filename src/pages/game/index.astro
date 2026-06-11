@@ -1,9 +1,14 @@
+---
+import GoogleTags from "@/components/GoogleTags.astro";
+---
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <GoogleTags placement="head" usePartytown={false} />
   <title>JigSolitaire Game Player - Free Online Puzzle</title>
   <meta name="description" content="Play the embedded JigSolitaire puzzle game, swap image tiles, merge correct groups, and restore each picture in your browser.">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
@@ -19,6 +24,7 @@
 </head>
 
 <body>
+  <GoogleTags placement="body" />
   <h1 class="seo-only">JigSolitaire Game Player</h1>
   <nav class="seo-only" aria-label="Game player links">
     <a href="/play/">Play JigSolitaire</a>
