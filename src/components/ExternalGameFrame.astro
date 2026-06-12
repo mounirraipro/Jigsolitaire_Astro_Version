@@ -42,7 +42,7 @@ const bentoGames = [
 ].slice(0, 8);
 const bentoGamesLeft = bentoGames.slice(0, 4);
 const bentoGamesRight = bentoGames.slice(4, 8);
-const gameSeoTitle = `Play ${game.title} Online - Free Browser Game`;
+const gameSeoTitle = `Play ${game.shortTitle} Online - Free Puzzle Game`;
 const encodedIframeUrl = Buffer.from(game.iframeUrl, "utf8").toString("base64");
 const guideItems = [
   { id: `${game.slug}-about`, label: "About", title: `About ${game.title}`, body: game.seoOverview },

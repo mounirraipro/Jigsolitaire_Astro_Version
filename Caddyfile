@@ -1,4 +1,16 @@
 :{$PORT:80} {
+	@oldEmailProtection {
+		header Host astro.jigsolitaire.online
+		path /cdn-cgi/l/email-protection
+	}
+	redir @oldEmailProtection https://jigsolitaire.online/contact/ 308
+
+	@emailProtection path /cdn-cgi/l/email-protection
+	redir @emailProtection /contact/ 308
+
+	@oldHost header Host astro.jigsolitaire.online
+	redir @oldHost https://jigsolitaire.online{uri} 308
+
 	@www header_regexp host Host ^www\.(.+)$
 	redir @www https://{re.host.1}{uri} 308
 

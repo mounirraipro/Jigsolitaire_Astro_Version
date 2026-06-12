@@ -31,6 +31,8 @@ const articleHeadingOverrides: Record<string, string> = {
 };
 const articleHeading = articleHeadingOverrides[article.slug] ?? article.title;
 const articleBodyHtml = article.html;
+const [contactLocal, contactDomain] = siteConfig.contactEmail.split("@");
+const feedbackSubject = `Comment on: ${article.title}`;
 const articleStructuredData = [
   {
     "@context": "https://schema.org",
@@ -105,7 +107,16 @@ const articleStructuredData = [
             <h3>Have a note about this guide?</h3>
             <p>Send a correction, question, or puzzle tip. We read feedback and use it to improve future updates.</p>
           </div>
-          <a class="secondary-action" href={`mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent(`Comment on: ${article.title}`)}`}>Email a comment</a>
+          <a
+            class="secondary-action"
+            href="/contact/"
+            data-email-action
+            data-email-local={contactLocal}
+            data-email-domain={contactDomain}
+            data-email-subject={feedbackSubject}
+          >
+            Email a comment
+          </a>
         </section>
 
         <section class="author-bio-box">
@@ -151,6 +162,17 @@ const articleStructuredData = [
 
   <script is:inline>
     (() => {
+      document.querySelectorAll("[data-email-action]").forEach((link) => {
+        const local = link.dataset.emailLocal;
+        const domain = link.dataset.emailDomain;
+        const subject = link.dataset.emailSubject || "JigSolitaire feedback";
+        if (local && domain) {
+          const protocol = ["mai", "lto:"].join("");
+          const at = String.fromCharCode(64);
+          link.setAttribute("href", `${protocol}${local}${at}${domain}?subject=${encodeURIComponent(subject)}`);
+        }
+      });
+
       document.querySelectorAll("[data-rating-box]").forEach((box) => {
         const buttons = [...box.querySelectorAll("[data-star]")];
         const hint = box.querySelector("[data-rating-hint]");

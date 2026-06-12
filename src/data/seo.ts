@@ -200,7 +200,6 @@ export const buildJsonLd = (page: SeoPage, canonicalUrl: string) => {
       "@id": publisherId,
       name: siteConfig.publisherName,
       url: siteConfig.siteUrl,
-      email: siteConfig.contactEmail,
       sameAs: siteConfig.sameAs,
     },
     {
