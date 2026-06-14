@@ -30,11 +30,13 @@ const categories = Array.from(
       </nav>
     </header>
 
+    <h2 class="sr-only">Blog articles</h2>
+
     {featuredPost && (
       <a class="blog-feature-card" href={`/blog/${featuredPost.slug}/`}>
         <div>
           <p>Latest / {featuredPost.category}</p>
-          <h2>{featuredPost.title}</h2>
+          <h3>{featuredPost.title}</h3>
           <span>{featuredPost.description}</span>
         </div>
         <footer>
@@ -46,7 +48,7 @@ const categories = Array.from(
 
     <section class="blog-card-section" id="article-list" aria-labelledby="blog-list-title">
       <header>
-        <h2 id="blog-list-title">All articles</h2>
+        <h3 id="blog-list-title">All articles</h3>
         <span>{restPosts.length} more guides</span>
       </header>
       <div class="blog-card-grid">

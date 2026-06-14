@@ -280,7 +280,6 @@ const MoveEngine = {
     }
 
     const newIdxSet = new Set(moves.map(m => m.newIdx));
-    const oldIdxSet = new Set(moves.map(m => m.oldIdx));
 
     // Tiles in destination cells that are NOT part of the group
     const displaced = moves

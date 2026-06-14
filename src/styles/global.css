@@ -355,7 +355,8 @@
   content: "";
 }
 
-.blog-feature-card h2 {
+.blog-feature-card h2,
+.blog-feature-card h3 {
   margin: 0.5rem 0 0.75rem;
   max-width: 780px;
   color: var(--color-ink);
@@ -394,7 +395,8 @@
   margin-bottom: 1rem;
 }
 
-.blog-card-section h2 {
+.blog-card-section h2,
+.blog-card-section h3 {
   margin: 0;
   color: var(--color-ink);
   font-size: clamp(1.4rem, 2.5vw, 2rem);
@@ -738,6 +740,19 @@
   color: var(--color-copy);
   font-size: 1.02rem;
   line-height: 1.78;
+}
+
+.article-plain-summary {
+  margin-bottom: 1.25rem;
+  border-left: 3px solid var(--color-game-sky);
+  padding-left: 1rem;
+  color: var(--color-muted);
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+.article-plain-summary strong {
+  color: var(--color-ink);
 }
 
 .article-content > p:first-child {
@@ -2428,7 +2443,8 @@
   }
 
   .section-head h2,
-  .section-head h3 {
+  .section-head h3,
+  .section-title-like {
     margin: 0;
     max-width: 760px;
     color: var(--color-ink);
@@ -2573,7 +2589,9 @@
   }
 
   .level-hero-card h2,
-  .level-hero-card h3 {
+  .level-hero-card h3,
+  .level-hero-title {
+    display: block;
     margin: 0;
     color: var(--color-ink);
     font-size: clamp(1.7rem, 4vw, 3rem);
@@ -3028,6 +3046,7 @@
 
   .games-directory-intro h2,
   .games-guide-strip h2,
+  .games-guide-strip > h3,
   .game-guide-head h2 {
     margin: 0;
     color: var(--color-ink);
@@ -3957,7 +3976,8 @@
 
   .play-info-head h1,
   .play-split-section h2,
-  .play-split-section h3 {
+  .play-split-section h3,
+  .play-panel-title {
     margin: 0;
     color: var(--color-ink);
     font-size: clamp(1.75rem, 3.4vw, 2.85rem);
@@ -4003,7 +4023,9 @@
   }
 
   .play-step-grid h2,
-  .play-step-grid h3 {
+  .play-step-grid h3,
+  .play-step-grid strong {
+    display: block;
     margin: 0 0 0.45rem;
     color: var(--color-ink);
     font-size: clamp(1.2rem, 2vw, 1.55rem);

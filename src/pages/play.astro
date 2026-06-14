@@ -46,7 +46,7 @@ const tips = [
       {playSteps.map(([number, title, text]) => (
         <article>
           <span>{number}</span>
-          <h3>{title}</h3>
+          <strong>{title}</strong>
           <p>{text}</p>
         </article>
       ))}
@@ -56,7 +56,7 @@ const tips = [
   <section class="play-info-section play-split-section">
     <div>
       <p class="eyebrow">Collections</p>
-      <h3>Pick a visual mood.</h3>
+      <p class="play-panel-title">Pick a visual mood.</p>
       <div class="play-category-pills">
         {categories.map((category) => <a class={getCategoryAccentClass(category.name)} href="/play/">{category.name}</a>)}
       </div>

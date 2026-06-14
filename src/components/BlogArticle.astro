@@ -30,7 +30,7 @@ const articleHeadingOverrides: Record<string, string> = {
   "tile-swap-puzzle-games-guide": "Tile-Swap Puzzle Games Guide",
 };
 const articleHeading = articleHeadingOverrides[article.slug] ?? article.title;
-const articleBodyHtml = article.html;
+const articleBodyHtml = article.html.replace(/<h2(\s[^>]*)?>/gi, "<h3$1>").replace(/<\/h2>/gi, "</h3>");
 const [contactLocal, contactDomain] = siteConfig.contactEmail.split("@");
 const feedbackSubject = `Comment on: ${article.title}`;
 const articleStructuredData = [
@@ -81,6 +81,13 @@ const articleStructuredData = [
 
     <div class="blog-article-shell">
       <main class="blog-article-main">
+        <h2 class="sr-only">Article sections</h2>
+        <section class="article-plain-summary" aria-label="Quick summary">
+          <p>
+            <strong>Quick summary.</strong>
+            This guide gives clear puzzle advice in plain steps. Read the main idea first, then try one tip at a time while you play. Keep sessions short, use the examples slowly, and come back when you want a calmer way to practice focus, memory, and problem solving.
+          </p>
+        </section>
         <div class="article-content" set:html={articleBodyHtml} />
 
         <section class="article-tags-box" aria-label="Article tags">

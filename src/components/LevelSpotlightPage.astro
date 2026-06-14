@@ -30,7 +30,7 @@ const previewImage = level.thumbnail;
       <img src={previewImage} alt={`${heading} puzzle preview`} width="1200" height="800" />
       <div>
         <span>{level.gridSize} - {level.difficulty}</span>
-        <h3>{level.title}</h3>
+        <strong class="level-hero-title">{level.title}</strong>
         <p>{category.longDescription}</p>
         <a class="primary-action" href="/play/"><span class="play-triangle"></span>Play this puzzle</a>
       </div>
@@ -57,7 +57,7 @@ const previewImage = level.thumbnail;
     </section>
 
     <div class="section-head">
-      <h3>More {category.name.toLowerCase()} puzzles after {heading}</h3>
+      <p class="section-title-like">More {category.name.toLowerCase()} puzzles after {heading}</p>
     </div>
     <div class="level-grid">
       {related.map((item) => (
